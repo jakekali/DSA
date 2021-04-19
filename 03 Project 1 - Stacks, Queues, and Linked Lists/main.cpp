@@ -241,10 +241,10 @@ void Handler::push(string name, string addMe) {
         }else if (name[0] == 's'){
             stringMap[name]->push(addMe);
         }else{
-            outputF <<  "ERROR: This name does not exist! \n";
+            outputF <<  "ERROR: This name does not exist!\n";
             return;
         }}else{
-            outputF <<  "ERROR: This name does not exist! \n";
+            outputF <<  "ERROR: This name does not exist!\n";
     }
 }
 

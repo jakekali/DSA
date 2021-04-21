@@ -89,7 +89,6 @@ Data linkList<Data>::removeFromStart() {
         last = nullptr;
     }else { //All other cases
         first = tmpNode->getNext();
-
     }
     size--;
     delete tmpNode; // Free the associated memory
@@ -274,7 +273,6 @@ void Handler::pop(string name) {
     }
 
 }
-
 
 int main() {
     auto handle = new Handler; //Class for Handling Input

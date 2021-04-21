@@ -5,6 +5,7 @@
 #include <list>
 #include <algorithm>
 #include <map>
+#include <vector>
 
 // To avoid extra typing:
 using namespace std;
@@ -20,16 +21,16 @@ class linkList{
         Node* next;
 
     public:
-        Node(Data fruit){ data = fruit; next = NULL;};
+        Node(Data fruit){ data = fruit; next = NULL;}; // Constructor for just Data
         Node(Data fruit, Node* adv){ data = fruit; next = adv;}
-        Data getData(){ return data; };
+        Data getData(){ return data; }; //
         Node* getNext(){ return next; };
         void setNext(Node* adva){ next = adva;};
     };
 
 private:
-    Node *first;
-    Node *last;
+    Node *first; //First Node of List
+    Node *last; //Last Node of List
     int size;
 
 public:
@@ -45,6 +46,7 @@ protected:
 
 };
 
+//Insert At Start - Used for Push for Stack
 template<typename Data>
 void linkList<Data>::insertAtStart(Data addMeStart) {
     linkList::Node* addMe = new Node(addMeStart);
@@ -58,6 +60,7 @@ void linkList<Data>::insertAtStart(Data addMeStart) {
 
 }
 
+//Insert At Start - Used for Push for Queue
 template<typename Data>
 void linkList<Data>::insertAtEnd(Data addMeEnd) {
     linkList::Node* addMe = new Node(addMeEnd);
@@ -70,31 +73,32 @@ void linkList<Data>::insertAtEnd(Data addMeEnd) {
     size++;
 }
 
+//Used for Pop for Both
 template<typename Data>
 Data linkList<Data>::removeFromStart() {
 
-    if(size == 0){
+    if(size == 0){ // In case of empty list - although this won't ever be run now bc we check for size ahead of time, important for implementation of these classes don't use a handler
         first = nullptr;
         last = nullptr;
-        return 0;
+        return 0; //to insure that we don't decrement later and get a negative number.
     }
     auto tmpNode = first;
     Data sendMe = tmpNode->getData();
-    if(size == 1){
+    if(size == 1){ //In case of an list we are emptying now
         first = nullptr;
         last = nullptr;
-    }else {
+    }else { //All other cases
         first = tmpNode->getNext();
 
     }
     size--;
-    delete tmpNode;
+    delete tmpNode; // Free the associated memory
 
     return sendMe;
 }
 
 
-//Inherited Stack Class:
+//Inheriting Stack Class:
 template<typename Data>
 class Stack: public linkList<Data>{
 public:
@@ -103,7 +107,7 @@ public:
 };
 
 
-//Inherited Queue Class:
+//Inheriting Queue Class:
 template<typename Data>
 class Queue: public linkList<Data>{
 public:
@@ -111,26 +115,15 @@ public:
     Data pop(){ return this->removeFromStart(); };
 };
 
-vector<string> split (const string &s, char delim) {
-    vector<string> result;
-    stringstream ss (s);
-    string item;
 
-    while (getline (ss, item, delim)) {
-        result.push_back (item);
-    }
-
-    return result;
-}
-
+//Used for resources that are needed to process commands.
 class Handler{
 private:
+    //Used to store the lists - because I'm using maps, I didn't find it necessary to have a templated find function,
+    // because the built in [] operator given the same result and if statements you be need regardless to determine which datatype to use
     map<string, linkList<int> *> intMap;
     map<string, linkList<double> *> doubleMap;
     map<string, linkList<string> *> stringMap;
-
-
-
 
 public:
     ofstream outputF;
@@ -139,8 +132,9 @@ public:
     void push(string name, string addMe);
     void pop(string name);
     bool exist(string name);
-    void proccess();
-    static vector<string> split(const string &s, char delim);
+    void process();
+    static vector<string> split(const string &s, char delim); //Static because it could theoretically used separately.
+
 };
 
 vector<string> Handler::split(const string &s, char delim) {
@@ -159,7 +153,7 @@ vector<string> Handler::split(const string &s, char delim) {
 bool Handler::exist(string name) {
     if (name[0] == 'i'){
         //ints here
-        if (intMap.end() == intMap.find(name)){
+        if (intMap.end() == intMap.find(name)){ //If find returns the end then it is not in the list
             return false;
         } else{
             return true;
@@ -179,11 +173,13 @@ bool Handler::exist(string name) {
             return true;
         }
     }else{
-        return false;
+        return false; //Catch case  for lists that do not start with i,d, or s
     }
 }
 
-void Handler::proccess(){
+
+//Driver function
+void Handler::process(){
     string command;
     while(getline(inputF,command)){
         outputF << "PROCESSING COMMAND: " << command << '\n';
@@ -231,17 +227,18 @@ void Handler::create(string name, const string& type) {
     }
 }
 
+//Push
 void Handler::push(string name, string addMe) {
     if(this->exist(name)){
         if (name[0] == 'i'){
-            intMap[name]->push(stoi(addMe));
+            intMap[name]->push(stoi(addMe)); //Converts String to Int and Pushs
         }else if (name[0] == 'd'){
-            double test = stod(addMe);
+            double test = stod(addMe); // to double
             doubleMap[name]->push(test);
         }else if (name[0] == 's'){
             stringMap[name]->push(addMe);
         }else{
-            outputF <<  "ERROR: This name does not exist!\n";
+            outputF <<  "ERROR: This name does not exist!\n"; //Shouldn't happen, but in case
             return;
         }}else{
             outputF <<  "ERROR: This name does not exist!\n";
@@ -251,7 +248,7 @@ void Handler::push(string name, string addMe) {
 void Handler::pop(string name) {
     if(this->exist(name)){
         if (name[0] == 'i'){
-            if (0 == intMap[name]->getSize()){
+            if (0 == intMap[name]->getSize()){  //Checks if not empty first
                 outputF << "ERROR: This list is empty!" << "\n";
             }else{
                 outputF << "Value popped: " << intMap[name]->pop() << "\n";
@@ -269,7 +266,7 @@ void Handler::pop(string name) {
                 outputF << "Value popped: " << stringMap[name]->pop() << "\n";
             }
         }else{
-            outputF << "ERROR: This name does not exist!" << "\n";
+            outputF << "ERROR: This name does not exist!" << "\n"; //Shouldn't happen, but in case
             return;
         }
     }else{
@@ -280,9 +277,9 @@ void Handler::pop(string name) {
 
 
 int main() {
-    auto handle = new Handler;
+    auto handle = new Handler; //Class for Handling Input
 
-    string input;
+    string input; //File Names
     string ouput;
     //Get Input File From User
     cout << "Input File Name: ";
@@ -292,12 +289,14 @@ int main() {
     cout << "Output File Name: ";
     getline(cin, ouput);
 
-    //Open File Streams From Use in the Class
+    //Open File Streams For Use in the Handle Class
     handle->inputF.open(input);
     handle->outputF.open(ouput);
 
-    handle->proccess();
+    //Run Driver Function
+    handle->process();
 
+    //Close the files
     handle->inputF.close();
     handle->outputF.close();
     return 0;

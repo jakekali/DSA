@@ -8,6 +8,7 @@
 #include <fstream>
 #include <ctime>
 #include <algorithm>
+#include <regex>
 
 using namespace std;
 
@@ -25,8 +26,24 @@ public:
     string makeLower(string word); //coverts a string to lower case
     int wordTooLong = 0; //used for debugging
     int badChar = 0; //used for debugging
+    auto resplit(const std::string & s, std::string rgx_str = "[^a-zA-Z0-9-']{1,24}");
 
 };
+
+auto spellChecker::resplit(const string &s, std::string rgx_str) {
+    std::vector<std::string> elems;
+
+    std::regex rgx (rgx_str);
+
+    std::sregex_token_iterator iter(s.begin(), s.end(), rgx, -1);
+    std::sregex_token_iterator end;
+
+    while (iter != end)  {
+        elems.push_back(*iter);
+        ++iter;
+    }
+    return elems;
+}
 
 unsigned long spellChecker::readDic(string fileName) {
 
@@ -61,47 +78,43 @@ string spellChecker::makeValidWord(string word = "hello") {
             return "";
 
         }else{
-            *it = ::tolower(*it); //does this here to avoid cycling again through
+                *it = ::tolower(*it); //does this here to avoid cycling again through
         }
     };
         return word;
 
 }
 
-unsigned long spellChecker::spellCheck(string inputFile, string outputFile) {clock_t c_start = clock();
+unsigned long spellChecker::spellCheck(string inputFile, string outputFile) {
+    clock_t c_start = clock();
     ifstream file(inputFile);
     ofstream outFile;
     outFile.open(outputFile);
-    int linenum = 0;
+    int linenum = 1;
     if (file.is_open()) {
         string line;
         c_start = clock();
         while (getline(file, line)) {
             string line1 = line.c_str();
-            line1+=" "; //used to force evaluation at the end of the line
-            string tempWord;
-            linenum++;
-            for (auto it = line1.cbegin() ; it != line1.cend(); ++it) {
-
-                if (!isalnum(*it) && *it !='-' && *it != '\'' && tempWord.length() > 0){
-                    if(tempWord.length() > 20){
-                        outFile << "Long word at line " << linenum << ", starts: " << this->makeLower(tempWord.substr(0,20)) << '\n';
+            vector<string> words = resplit(line1);
+            for (auto & word : words) {
+                if(alpha(word)) {
+                    if(word.length() > 20){
+                        outFile << "Long word at line " << linenum << ", starts: " << this->makeLower(word.substr(0,20)) << '\n';
                     }else{
-                        string validate = this->makeValidWord(tempWord);
-                        if (validate.length() > 0 && !dictionary.contains(validate) && alpha(validate))
+                        string validate = this->makeValidWord(word);
+                        bool cont = dictionary.contains(validate);
+                        if(!cont && validate.length() > 0)
                             outFile << "Unknown word at line " << linenum <<": " << validate << '\n';
                     }
-                    tempWord = ""; //reset word
-                }else{
-                    tempWord += *it;
                 }
-
             }
-
+            linenum++;
         }
-        file.close();
+
     }
     clock_t c_end = clock();
+    file.close();
     return c_end-c_start;
 }
 
@@ -116,11 +129,13 @@ bool spellChecker::alpha(string word) {
     int i = 0;
     while (word[i])
     {
-        if (!isalpha(word[i])){return false;}
+        if (!isalpha(word[i]) && word[i] != '-' && word[i] != '\''){return false;}
         i++;
     }
     return true;
 }
+
+
 
 
 int main () {

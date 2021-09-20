@@ -8,7 +8,7 @@
 #include <stdio.h>      /* printf, scanf, puts, NULL */
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
-
+#include <regex>
 #include <unistd.h>
 
 using namespace std;
@@ -69,10 +69,37 @@ std::string gen_random1(const int len) {
 
 }
 
+auto resplit(const std::string & s, std::string rgx_str = "[^\\w-']{1,24}") {
+
+
+    std::vector<std::string> elems;
+
+    std::regex rgx (rgx_str);
+
+    std::sregex_token_iterator iter(s.begin(), s.end(), rgx, -1);
+    std::sregex_token_iterator end;
+
+    while (iter != end)  {
+        //std::cout << "S43:" << *iter << std::endl;
+        elems.push_back(*iter);
+        ++iter;
+    }
+
+    return elems;
+
+}
 
 
 int main() {
 
+    string s = "This is a sample sentence !with- []s.";
+    vector<string> v22 = resplit(s);
+
+    for (const auto & e: v22) {
+        cout <<"Token:" << e << endl;
+    }
+
+    /*
     ofstream outFile;
     outFile.open("dictionary.txt");
     int i = 0;
@@ -90,6 +117,6 @@ int main() {
         outFile2 << gen_random1(rand() % 50 + 1) << '\n';
         j++;
     }
-    outFile2.close();
+    outFile2.close();*/
 
 }

@@ -6,15 +6,23 @@
 
 #IncludeRegexTransform: 
 
-/cygdrive/c/Users/Jacob/Documents/GitHub/DSA/06 Project 01 - Hash Table/hash.cpp
-hash.h
-/cygdrive/c/Users/Jacob/Documents/GitHub/DSA/06 Project 01 - Hash Table/hash.h
-iostream
--
-
 /cygdrive/c/Users/Jacob/Documents/GitHub/DSA/06 Project 01 - Hash Table/hash.h
 vector
 -
 string
+-
+
+/cygdrive/c/Users/Jacob/Documents/GitHub/DSA/06 Project 01 - Hash Table/spellcheck.cpp
+vector
+-
+hash.h
+/cygdrive/c/Users/Jacob/Documents/GitHub/DSA/06 Project 01 - Hash Table/hash.h
+iostream
+-
+fstream
+-
+ctime
+-
+algorithm
 -
 

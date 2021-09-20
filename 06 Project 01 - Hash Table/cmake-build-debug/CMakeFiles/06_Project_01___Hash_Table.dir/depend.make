@@ -4,3 +4,6 @@
 CMakeFiles/06_Project_01___Hash_Table.dir/hash.cpp.o: ../hash.cpp
 CMakeFiles/06_Project_01___Hash_Table.dir/hash.cpp.o: ../hash.h
 
+CMakeFiles/06_Project_01___Hash_Table.dir/spellcheck.cpp.o: ../hash.h
+CMakeFiles/06_Project_01___Hash_Table.dir/spellcheck.cpp.o: ../spellcheck.cpp
+

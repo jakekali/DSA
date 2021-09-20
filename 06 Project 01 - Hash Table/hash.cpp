@@ -23,24 +23,10 @@ unsigned int hashTable::getPrime(int size) {
 }
 
 int hashTable::hash(const std::string &key){
-    // P and M
-    int p = 60;
-    int m = this->capacity;
-    long long power_of_p = 1;
-    long long hash_val = 0;
-
-
-    // Loop to calculate the hash value
-    // by iterating over the elements of string
-    for (int i = 0; i < key.length(); i++) {
-        hash_val
-                = (hash_val
-                   + (key[i] - 'a' + 1) * power_of_p)
-                  % m;
-        power_of_p
-                = (power_of_p * p) % m;
-    }
-    return hash_val;
+    unsigned int hashVal = 0;
+    for (char ch : key)
+        hashVal = 37*hashVal + ch;
+    return hashVal % this->capacity;
 }
 
 
@@ -58,6 +44,7 @@ int hashTable::insert(const std::string &key, void *pv) {
     }
 
     if(this->contains(key)){
+        this->duplicateKey++;
         return 1;
     }
 
@@ -68,12 +55,14 @@ int hashTable::insert(const std::string &key, void *pv) {
             currentposition = 0;
         }else{
             currentposition++;
+            this->collCounter++;
         }
     }
     this->data[currentposition].key = key;
     this->data[currentposition].isOccupied = true;
     this->data[currentposition].pv = pv;
     this->data[currentposition].isDeleted = false;
+    this->filled++;
     return 0;
 
 }
@@ -98,13 +87,17 @@ bool hashTable::contains(const std::string &key) {
 }
 
 bool hashTable::rehash() {
+    rehashCounter++;
     // The rehash function; makes the hash table bigger.
     // Returns true on success, false if memory allocation fails.
     try{
         vector<hashItem> old_table = this->data;
         this->data = vector<hashItem>();
         this->capacity = this->getPrime(2*(this->capacity+5));
+        this->data.clear();
         this->data.resize(this->capacity);
+        this->filled = 0;
+        this->duplicateKey = 0;
         for (auto &&hash_item : old_table){
             if(hash_item.isOccupied && !hash_item.isDeleted){
                 this->insert(hash_item.key,hash_item.pv);
@@ -113,28 +106,9 @@ bool hashTable::rehash() {
     }catch(system_error){
         return false;
     }
-
     return false;
 }
 
-
-// Get the pointer associated with the specified key.
-// If the key does not exist in the hash table, return nullptr.
-// If an optional pointer to a bool is provided,
-// set the bool to true if the key is in the hash table,
-// and set the bool to false otherwise.
-bool hashTable::*getPointer(const std::string &key, bool *b) {
-    int pos = this->findPos(key);
-    if(pos == -1){
-        *b = false;
-        return nullptr;
-    }else{
-        *b = true;
-        return ;
-    }
-
-
-}
 
 int hashTable::findPos(const string &key) {
     int hashedkey = this->hash(key);
@@ -165,19 +139,27 @@ bool hashTable::remove(const string &key) {
     }
 }
 
+void *hashTable::getPointer(const string &key, bool *b) {
+    int position = this->findPos(key);
 
-int main(){
-    hashTable *hasher = new hashTable(0);
-    cout << "\n" << hasher->insert("jakesigmin");
-    cout << "\n" << hasher->insert("jakesigmin");
-    cout << "\n" << hasher->insert("jakesigmin");
-    cout << "\n" << hasher->insert("jakesigmin");
-    cout << "\n" << hasher->insert("jakesigmin");
-    cout << "\n" << hasher->insert("jakesigmin");
-    cout << "\n" << hasher->insert("jakesigmin");
-    cout << "\n" << hasher->contains("pizz");
-    cout << "\n" << hasher->contains("jakesigmin");
+    if (b)
+        *b = (position != -1);
+
+    if (position == -1)
+        return nullptr;
+
+    return this->data[position].pv;
+}
+
+int hashTable::setPointer(const string &key, void *pv) {
+    int pos = this->findPos(key);
+
+    if (pos == -1)
+        return 1;
+    else{
+        this->data[pos].pv = pv;
+        return 0;
+    }
+}
 
 
-
-};

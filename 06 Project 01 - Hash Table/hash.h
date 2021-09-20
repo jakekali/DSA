@@ -41,8 +41,11 @@ class hashTable {
   // Returns true on success,
   // false if the specified key is not in the hash table.
   bool remove(const std::string &key);
+  int collCounter = 0;
+  int rehashCounter = 0;
+  int duplicateKey = 0;
 
-
+private:
 
   // Each item in the hash table contains:
   // key - a string used as a key.

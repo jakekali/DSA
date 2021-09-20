@@ -7,4 +7,5 @@ include_directories(.)
 
 add_executable(06_Project_01___Hash_Table
         hash.cpp
-        hash.h)
+        hash.h
+        spellcheck.cpp)

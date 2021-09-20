@@ -88,6 +88,9 @@
 		<Unit filename="/cygdrive/c/Users/Jacob/Documents/GitHub/DSA/06 Project 01 - Hash Table/hash.h">
 			<Option target="06_Project_01___Hash_Table"/>
 		</Unit>
+		<Unit filename="/cygdrive/c/Users/Jacob/Documents/GitHub/DSA/06 Project 01 - Hash Table/spellcheck.cpp">
+			<Option target="06_Project_01___Hash_Table"/>
+		</Unit>
 		<Unit filename="/cygdrive/c/Users/Jacob/Documents/GitHub/DSA/06 Project 01 - Hash Table/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

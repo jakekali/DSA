@@ -170,6 +170,33 @@ hash.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/06_Project_01___Hash_Table.dir/build.make CMakeFiles/06_Project_01___Hash_Table.dir/hash.cpp.s
 .PHONY : hash.cpp.s
 
+spellcheck.o: spellcheck.cpp.o
+
+.PHONY : spellcheck.o
+
+# target to build an object file
+spellcheck.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/06_Project_01___Hash_Table.dir/build.make CMakeFiles/06_Project_01___Hash_Table.dir/spellcheck.cpp.o
+.PHONY : spellcheck.cpp.o
+
+spellcheck.i: spellcheck.cpp.i
+
+.PHONY : spellcheck.i
+
+# target to preprocess a source file
+spellcheck.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/06_Project_01___Hash_Table.dir/build.make CMakeFiles/06_Project_01___Hash_Table.dir/spellcheck.cpp.i
+.PHONY : spellcheck.cpp.i
+
+spellcheck.s: spellcheck.cpp.s
+
+.PHONY : spellcheck.s
+
+# target to generate assembly for a file
+spellcheck.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/06_Project_01___Hash_Table.dir/build.make CMakeFiles/06_Project_01___Hash_Table.dir/spellcheck.cpp.s
+.PHONY : spellcheck.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -182,6 +209,9 @@ help:
 	@echo "... hash.o"
 	@echo "... hash.i"
 	@echo "... hash.s"
+	@echo "... spellcheck.o"
+	@echo "... spellcheck.i"
+	@echo "... spellcheck.s"
 .PHONY : help
 
 

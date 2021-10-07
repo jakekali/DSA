@@ -26,7 +26,7 @@ public:
     string makeLower(string word); //coverts a string to lower case
     int wordTooLong = 0; //used for debugging
     int badChar = 0; //used for debugging
-    auto resplit(const std::string & s, std::string rgx_str = "[^a-zA-Z0-9-']{1,24}");
+    auto resplit(const std::string & s, std::string rgx_str = "[^a-zA-Z0-9-']{1,60}");
 
 };
 
@@ -155,7 +155,7 @@ int main () {
     cin >> outFile;
 
     unsigned long time1 = spell.spellCheck(inFile, outFile);
-    cout << "Total time (in seconds) to check document: " << (time1 * 1000.000 / (CLOCKS_PER_SEC * 1000.00));
+    cout << "Total time (in seconds) to check document: " << (time1 * 1000.000 / (CLOCKS_PER_SEC * 1000.00)) << '\n';
 
 
 

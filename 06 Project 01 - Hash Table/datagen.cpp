@@ -48,10 +48,10 @@ std::string gen_random1(const int len) {
             "0123456789"
             "ABCDEFGHIJKLMNOPQRSTU VWXYZ"
             "abcd  efgh ijklmnopqrst uvwxyz-'"
-            "0123456789"
+            "012345+___)(()*&*&(*!#%!@#$~@%%$%&%#$@6789"
             "ABCDEFGH IJKLMNOPQRS TUVWXYZ"
             "abcdefghi jklmnopqr stuvwxyz-'""0123456789"
-            "ABCDEFGHIJKLMNOPQ RSTUVWXYZ"
+            "ABCD1234~!#@%% tuyfdgvbvxfgfh564646/*5656.......EFGHIJKLr12345(***^*^(*)(@#^DB S Vs h l879645MNOPQ RSTUVWXYZ"
             "abcdefghijklmno$ pqrstuvwxyz-'""0123456789"
             "ABCD@EFGHIJKLMNOPQRSTUVWXYZ"
             "abcde   fghijklmnopqrstuvwxyz-'""0123456789"
@@ -92,16 +92,16 @@ auto resplit(const std::string & s, std::string rgx_str = "[^\\w-']{1,24}") {
 
 int main() {
 
-    string s = "This is a sample sentence !with- []s.";
-    vector<string> v22 = resplit(s);
+//    string s = "This is a sample sentence !with- []s.";
+//    vector<string> v22 = resplit(s);
+//
+//    for (const auto & e: v22) {
+//        cout <<"Token:" << e << endl;
+//    }
 
-    for (const auto & e: v22) {
-        cout <<"Token:" << e << endl;
-    }
 
-    /*
     ofstream outFile;
-    outFile.open("dictionary.txt");
+    outFile.open("dictionary1.txt");
     int i = 0;
     while (i < 1000000) {
         outFile << gen_random(rand() % 25 + 1) << '\n';
@@ -111,12 +111,12 @@ int main() {
 
 
     ofstream outFile2;
-    outFile2.open("document.txt");
+    outFile2.open("document1.txt");
     int j = 0;
     while (j < 10000) {
-        outFile2 << gen_random1(rand() % 50 + 1) << '\n';
+        outFile2 << gen_random1(rand() % 1000 + 1) << '\n';
         j++;
     }
-    outFile2.close();*/
+    outFile2.close();
 
 }

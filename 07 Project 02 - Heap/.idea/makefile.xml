@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MakefileBuildTargetsManager">
+    <user-build-targets>
+      <build-target name="heap.cpp heap.h main.cpp hash.h hash.cpp -ggdb">
+        <build-configurations>
+          <build-configuration toolchainName="Cygwin">
+            <make-targets>
+              <make-target>heap.cpp</make-target>
+              <make-target>heap.h</make-target>
+              <make-target>main.cpp</make-target>
+              <make-target>hash.h</make-target>
+              <make-target>hash.cpp</make-target>
+              <make-target>-ggdb</make-target>
+            </make-targets>
+          </build-configuration>
+        </build-configurations>
+      </build-target>
+    </user-build-targets>
+  </component>
+</project>

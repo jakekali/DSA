@@ -1,4 +1,4 @@
-C:\Users\Jacob\AppData\Local\JetBrains\CLion2020.3\cygwin_cmake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/cygdrive/c/Users/Jacob/Documents/GitHub/DSA/06 Project 01 - Hash Table"
--- Configuring done
--- Generating done
--- Build files have been written to: /cygdrive/c/Users/Jacob/Documents/GitHub/DSA/06 Project 01 - Hash Table/cmake-build-debug
+CMake executable is incorrect Configure Disable profile
+
+Cannot get compiler information:
+	Connection refused: connect

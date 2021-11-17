@@ -19,15 +19,21 @@ int heap::insert(const std::string &id, int key, void *pv) {
 
     int hole = ++currentSize;
 
-    //Simplier just to do it here, since it only 1 loop
-    for(; new_node.getKey() < data[hole/2].getKey(); hole /= 2){
-        data[hole] = std::move(data[hole/2]);
-        map_p.setPointer(data[hole].getID(),&data[hole]);
-    }
+
     data[hole] = std::move(new_node);
     map_p.insert(data[hole].getID(),&data[hole]);
 
+    heapifyDown(hole);
     return 0;
+    
+    //Simplier just to do it here, since it only 1 loop
+    // it avoids an extra copying of the data
+    // for(; new_node.getKey() < data[hole/2].getKey(); hole /= 2){
+    //     data[hole] = std::move(data[hole/2]);
+    //     map_p.setPointer(data[hole].getID(),&data[hole]);
+    // }
+    // data[hole] = std::move(new_node);
+    // map_p.insert(data[hole].getID(),&data[hole]);
     }
 }
 
